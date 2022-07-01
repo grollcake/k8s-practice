@@ -31,7 +31,7 @@ def imaginary_convert(file: str):
 
     # 2. PNG로 변환
     url = IMAGINARY_ENDPOINT + '/convert'
-    headers = {'API-Key': 'Newgw20@@'}
+    headers = {'API-Key': 'awesome-k8s'}
     params = {'type': 'png'}
     files = [('file', (filename, open(file, 'rb')))]
     response = requests.post(url, headers=headers, params=params, files=files)
