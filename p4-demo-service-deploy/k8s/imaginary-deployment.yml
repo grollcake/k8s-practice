@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imaginary-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imaginary
+      tier: app
+  template:
+    metadata:
+      labels:
+        app: imaginary
+        tier: app
+    spec:
+      containers:
+        - name: imaginary
+          image: h2non/imaginary:latest
+          args: [ "-enable-url-source", "-concurrency", "5", "-key", "awesome-k8s" ]
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 9000
+              httpHeaders:
+                - name: API-Key
+                  value: awesome-k8s
+          resources:
+            requests: 
+              cpu: "250m"
+            limits:
+              cpu: "500m"
