@@ -20,9 +20,9 @@ sudo ntpq -p
 
 sudo sysctl --system
 
-sudo echo "192.168.0.10  k8s-master" >> /etc/hosts
-sudo echo "192.168.0.20  k8s-node1" >> /etc/hosts
-sudo echo "192.168.0.30  k8s-node2" >> /etc/hosts
+sudo sh -c "echo 192.168.0.10  k8s-master >> /etc/hosts"
+sudo sh -c "echo 192.168.0.20  k8s-node1 >> /etc/hosts"
+sudo sh -c "echo 192.168.0.30  k8s-node2 >> /etc/hosts"
 
 ##########################################################
 # Step 1. Docker 설치
