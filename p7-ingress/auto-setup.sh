@@ -54,3 +54,6 @@ kubectl get ingress
 
 # EXTERNAL-IP 할당 모니터링
 kubectl get svc -n ingress-nginx
+
+# 외부 연결 도메인 확인
+kubectl describe ingress

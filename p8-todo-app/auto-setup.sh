@@ -16,21 +16,20 @@ fi
 cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 ##########################################################
-# Step 1. imaginary 배포
+# Step 1. todo-app 배포
 ##########################################################
 
-# imaginary pod 한개 배포
-kubectl apply -f k8s/imaginary-deployment.yml
+# 소스코드 내려받기
+git clone https://github.com/johscheuer/todo-app-web.git ~/todo-app-web
 
-# imaginary NodePort 서비스 배포 (Port: 30000)
-kubectl apply -f k8s/imaginary-service.yml
-
+# k8s deploy
+kubectl apply -f ~/todo-app-web/k8s-deployment/
 
 # 배포가 완료되길 대기
 echo "-- Waiting for service ready -----------------------------------"
-kubectl wait pod --for=condition=Ready -l app=imaginary
+kubectl wait pod --for=condition=Ready -l app=todo-app
 sleep 1
 
-# 헬스체크 API 호출
-echo 'curl -H "API-Key: awesome-k8s" 127.0.0.1:30000/health'
-curl -H "API-Key: awesome-k8s" 127.0.0.1:30000/health
+# 상태 출력
+echo "kubectl get all,ep -o wide -n todo-app"
+kubectl get all,ep -o wide -n todo-app
