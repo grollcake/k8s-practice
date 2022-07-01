@@ -27,7 +27,7 @@ kubectl apply -f ~/todo-app-web/k8s-deployment/
 
 # 배포가 완료되길 대기
 echo "-- Waiting for service ready -----------------------------------"
-kubectl wait pod --for=condition=Ready -l app=todo-app
+kubectl wait pod --for=condition=Ready -l app=todo-app -n todo-app
 sleep 1
 
 # 상태 출력
