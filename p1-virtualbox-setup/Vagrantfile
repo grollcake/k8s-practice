@@ -1,0 +1,69 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+nic1 = "Intel(R) Wi-Fi 6 AX200 160MHz"
+nic2 = "Intel(R) Wi-Fi 6E AX211 160MHz"
+nic3 = "Intel(R) Wireless-AC 9560 160MHz #2"
+
+Vagrant.configure("2") do |config|
+  config.vm.define "k8s-master" do |config|
+    config.vm.box = "generic/ubuntu2004"
+    config.vm.hostname = "k8s-master"
+    config.vm.network "public_network", ip: "192.168.0.10", bridge: ["#{nic1}", "#{nic2}", "#{nic3}"]
+    config.vm.network "private_network", ip: "192.168.1.10", :adapter => 3
+    config.vm.box_check_update = false
+    config.vm.disk :disk, name: "disk1", size: "10GB", primary: true
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.name = "k8s-master"
+      vb.cpus = 2
+      vb.memory = "2048"  # Customize the amount of memory on the VM:
+      vb.customize ["modifyvm", :id, "--nic2", "natnetwork"]
+      vb.gui = false # Display the VirtualBox GUI when booting the machine
+    end
+  end
+
+  config.vm.define "k8s-node1" do |config|
+    config.vm.box = "generic/ubuntu2004"
+    config.vm.hostname = "k8s-node1"
+    config.vm.network "public_network", ip: "192.168.0.20", bridge: ["#{nic1}", "#{nic2}", "#{nic3}"]
+    config.vm.network "private_network", ip: "192.168.1.20", :adapter => 3
+    config.vm.box_check_update = false
+    config.vm.disk :disk, name: "disk1", size: "10GB", primary: true
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.name = "k8s-node1"
+      vb.cpus = 2
+      vb.memory = "2048"  # Customize the amount of memory on the VM:
+      vb.customize ["modifyvm", :id, "--nic2", "natnetwork"]
+      vb.gui = false # Display the VirtualBox GUI when booting the machine
+    end
+  end
+
+  config.vm.define "k8s-node2" do |config|
+    config.vm.box = "generic/ubuntu2004"
+    config.vm.hostname = "k8s-node2"
+    config.vm.network "public_network", ip: "192.168.0.30", bridge: ["#{nic1}", "#{nic2}", "#{nic3}"]
+    config.vm.network "private_network", ip: "192.168.1.30", :adapter => 3
+    config.vm.box_check_update = false
+    config.vm.disk :disk, name: "disk1", size: "10GB", primary: true
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.name = "k8s-node2"
+      vb.cpus = 2
+      vb.memory = "2048"  # Customize the amount of memory on the VM:
+      vb.customize ["modifyvm", :id, "--nic2", "natnetwork"]
+      vb.gui = false # Display the VirtualBox GUI when booting the machine
+    end
+  end
+
+  # Provision
+  config.vm.provision "shell", inline: <<-SHELL
+    # 실습용 계정 생성
+    useradd -m -s /bin/bash -p $(perl -e 'print crypt("k8s", "salt")') k8s
+    usermod -aG sudo k8s
+
+    # git clone
+    runuser -l k8s -c 'git clone https://github.com/grollcake/k8s-practice.git'
+  SHELL
+end
