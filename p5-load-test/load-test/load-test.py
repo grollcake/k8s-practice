@@ -79,7 +79,7 @@ def main():
     # 3. 변환 작업 병렬 처리
     threads = []
     for idx in range(100):
-        t = threading.Thread(target=imaginary_convert, args=idx)
+        t = threading.Thread(target=imaginary_convert, args=[idx])
         t.start()
         threads.append(t)
         if len(threads) % concurrent_cnt == 0:
