@@ -7,6 +7,20 @@ if (( $EUID == 0 )); then
 fi
 
 ##########################################################
+# Step 0. 서버 기본 설정
+##########################################################
+# swap off
+swapoff -a
+sed -i '/swap/s/^/#/' /etc/fstab
+
+# NTP(Network Time Protocol) 설정 -- node간 시간 동기화 용도
+apt install -y ntp
+service ntp restart
+ntpq -p
+
+sysctl --system
+
+##########################################################
 # Step 1. Docker 설치
 ##########################################################
 
@@ -51,6 +65,16 @@ sudo usermod -aG docker k8s
 ##########################################################
 # Step 2. kubelet kubeadm kubectl 설치
 ##########################################################
+
+# iptables가 브리지된 트래픽을 보게 하기
+cat <<EOF | tee /etc/modules-load.d/k8s.conf
+br_netfilter
+EOF
+
+cat <<EOF | tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
 
 # 구글 클라우드 퍼블릭 키 다운로드
 sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
