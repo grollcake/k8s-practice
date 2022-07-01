@@ -28,7 +28,7 @@ kubectl apply -f k8s/imaginary-service.yml
 
 # 배포가 완료되길 대기
 echo "-- Waiting for imaginary pod ready -----------------------------------"
-kubectl wait -f k8s/imaginary-deployment.yml
+kubectl wait pod --for=condition=Ready -l app=imaginary
 
 # 헬스체크 API 호출
 echo "curl -H "API-Key: awesome-k8s" 127.0.0.1:30000/health"
