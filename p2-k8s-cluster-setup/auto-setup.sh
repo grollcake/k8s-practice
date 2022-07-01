@@ -10,15 +10,15 @@ fi
 # Step 0. 서버 기본 설정
 ##########################################################
 # swap off
-swapoff -a
-sed -i '/swap/s/^/#/' /etc/fstab
+sudo swapoff -a
+sudo sed -i '/swap/s/^/#/' /etc/fstab
 
 # NTP(Network Time Protocol) 설정 -- node간 시간 동기화 용도
-apt install -y ntp
-service ntp restart
-ntpq -p
+sudo apt install -y ntp
+sudo service ntp restart
+sudo ntpq -p
 
-sysctl --system
+sudo sysctl --system
 
 ##########################################################
 # Step 1. Docker 설치
