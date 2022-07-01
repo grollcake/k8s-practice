@@ -19,13 +19,16 @@ cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 # Step 1. Ingress 설치
 ##########################################################
 
-# cloud 유형으로 ingress를 설치한다.
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
-
 # kubernetes v1.14.2 부터 ipvs 사용하는데 strict ARP mode를 enable한다.
 kubectl get configmap kube-proxy -n kube-system -o yaml | \
 sed -e "s/strictARP: false/strictARP: true/" | \
 kubectl apply -f - -n kube-system
+
+# cloud 유형으로 ingress를 설치한다.
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
+
+# 상태 조회
+kubectl get all -n ingress-nginx
 
 ##########################################################
 # Step 2. MetalLB 설치
@@ -36,27 +39,18 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manif
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manifests/metallb.yaml
 
 # ingress EXTERNAL-IP에 192.168.1.100 할당
-cat <<EOF | kubectl apply -f -
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  namespace: metallb-system
-  name: config
-data:
-  config: |
-    address-pools:
-    - name: default
-      protocol: layer2
-      addresses:
-      - 192.168.1.100-192.168.1.200
-EOF
+kubectl apply -f k8s/metallb-configmap.yml
 
 ##########################################################
 # Step 3. Imaginary에 ingress 적용
 ##########################################################
 
 # Imaginary에 ingress 적용
+kubectl apply -f k8s/imaginary-service.yml
 kubectl apply -f k8s/imaginary-ingress.yml
 
+# ingress 상태 조회
+kubectl get ingress
+
 # EXTERNAL-IP 할당 모니터링
-watch kubectl get svc -n ingress-nginx
+kubectl get svc -n ingress-nginx
