@@ -1,0 +1,21 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: imaginary-hpa-cpu
+spec:
+  maxReplicas: 10 # 최대 레플리카 수
+  minReplicas: 1 # 최소 레플리카 수
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: imaginary-deployment
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80 # 평균 CPU 사용량이 80% 이상인 경우 Scale Out 이하인 경우 Scale In
+
+# hpa 상태 조회 명령
+# kubectl get hpa -w
