@@ -12,15 +12,18 @@ if [ "$HOSTNAME" != "k8s-master" ]; then
     exit
 fi
 
+# 현재 스크립트 경로로 변경
+cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 ##########################################################
 # Step 1. 대시보드 설치 및 토큰 출력
 ##########################################################
 
 # K8S Dashboard 권장 설정에서 Service 유형을 NodePort로 포트는 30443으로 변경해 놓았음
-kubectl apply -f kubernetes-dashboard/k8s-dashboard-recommended.yml
+kubectl apply -f k8s/dashboard-recommended.yml
 
 # serviceaccount, ClusterRoleBinding
-kubectl apply -f kubernetes-dashboard/k8s-dashboard-admin-user.yml
+kubectl apply -f k8s/dashboard-admin-user.yml
 
 # admin-user 로그인 토큰 생성
 echo "-- dashboard admin-user login token -----------------------------------"
