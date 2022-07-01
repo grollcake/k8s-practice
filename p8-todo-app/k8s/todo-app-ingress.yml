@@ -16,5 +16,4 @@ spec:
                 name: todo-app
                 namespace: todo-app
                 port:
-                  number: 3000
-
+                  number: 80
