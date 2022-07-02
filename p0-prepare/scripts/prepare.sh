@@ -16,6 +16,7 @@ find /home/k8s/k8s-practice -name "*.sh" -exec chmod +x {} \;
 ##########################################################
 # Step 2. 기본 패키지 설치
 ##########################################################
+apt update
 
 # NTP(Network Time Protocol) 설정 -- node간 시간 동기화 용도
 apt install -y ntp
@@ -23,7 +24,7 @@ service ntp restart
 ntpq -p
 
 # nfs client
-apt-get -y install nfs-common cifs-utils
+apt -y install nfs-common cifs-utils
 
 # cluser host 등록
 sh -c "echo 192.168.0.10  k8s-master >> /etc/hosts"
