@@ -6,13 +6,6 @@ if (( $EUID == 0 )); then
     exit
 fi
 
-
-# nfs-server VM에서만 실행한다.
-if [ "$HOSTNAME" != "nfs-server" ]; then
-    echo "[E] nfs-sever VM에서만 실행 가능합니다"
-    exit
-fi
-
 ##########################################################
 # Step 1. nfs server 설치
 ##########################################################
