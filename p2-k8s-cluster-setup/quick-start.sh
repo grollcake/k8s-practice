@@ -13,16 +13,7 @@ fi
 sudo swapoff -a
 sudo sed -i '/swap/s/^/#/' /etc/fstab
 
-# NTP(Network Time Protocol) 설정 -- node간 시간 동기화 용도
-sudo apt install -y ntp
-sudo service ntp restart
-sudo ntpq -p
-
-sudo sysctl --system
-
-sudo sh -c "echo 192.168.0.10  k8s-master >> /etc/hosts"
-sudo sh -c "echo 192.168.0.20  k8s-node1 >> /etc/hosts"
-sudo sh -c "echo 192.168.0.30  k8s-node2 >> /etc/hosts"
+sysctl --system
 
 ##########################################################
 # Step 1. Docker 설치

@@ -24,6 +24,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt install -y nfs-kernel-server portmap
 
 mkdir -p /var/nfs_storage
+chmod 777 /var/nfs_storage
 
 cat <<EOF | tee /etc/exports
 /var/nfs_storage 192.168.1.0/24(rw)

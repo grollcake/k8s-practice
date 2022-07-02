@@ -36,6 +36,6 @@ Vagrant.configure("2") do |config|
     bash /home/k8s/k8s-practice/p9-persistent-volume/scripts/nfs-server-setup.sh
 
     # 스크립트 파일에 실행 속성 부여
-    runuser -l k8s -c 'find k8s-practice -name "*.sh" -exec chmod +x {} \;'
+    find /home/k8s/k8s-practice -name "*.sh" -exec chmod +x {} \; 
   SHELL
 end
