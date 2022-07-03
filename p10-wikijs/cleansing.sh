@@ -20,3 +20,4 @@ cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 ##########################################################
 
 kubectl delete --all all,pvc,ingress -n wikijs-app
+kubectl delete pv pv-wikijs-postgres
