@@ -21,3 +21,5 @@ cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 kubectl delete --all all,pvc -n apache-app
 kubectl delete --all all,pvc -n nginx-app
+kubectl delete pv nfs-apache-log
+kubectl delete pv nfs-nginx-log
