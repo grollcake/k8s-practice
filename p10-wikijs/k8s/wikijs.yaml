@@ -51,6 +51,6 @@ spec:
             - name: DB_NAME
               value: wikijs_production
             - name: HA_ACTIVE
-              value: true
+              value: 'true'
           ports:
             - containerPort: 3000
