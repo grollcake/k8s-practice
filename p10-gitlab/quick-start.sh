@@ -27,3 +27,6 @@ kubectl apply -f k8s/nfs-volumes.yaml
 kubectl apply -f k8s/postgres.yaml
 kubectl apply -f k8s/redis.yaml
 kubectl apply -f k8s/gitlab.yaml
+kubectl apply -f k8s/ingress.yaml
+
+watch kubectl get all -o wide -n gitlab-app
