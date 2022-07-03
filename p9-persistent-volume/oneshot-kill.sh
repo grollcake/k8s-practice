@@ -23,7 +23,7 @@ cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 kubectl apply -f k8s/apache-with-pv.yml
 
 # 상태 조회
-kubectl get all,pvc -o wide -n apache
+kubectl get all,pvc -o wide -n apache-app
 
 ##########################################################
 # Step 2. nginx에 PV와 subpath를 생성
@@ -33,4 +33,4 @@ kubectl get all,pvc -o wide -n apache
 kubectl apply -f k8s/nginx-with-pv-subpath.yml
 
 # 상태 조회
-kubectl get all,pvc -o wide -n nginx
+kubectl get all,pvc -o wide -n nginx-app
