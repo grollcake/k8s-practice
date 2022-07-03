@@ -33,4 +33,4 @@ kubectl get all,pv,pvc -o wide -n apache
 kubectl apply -f k8s/nginx-with-pv-subpath.yml
 
 # 상태 조회
-kubectl get all,pv,pvc -o wide -n ngix
+kubectl get all,pv,pvc -o wide -n nginx
