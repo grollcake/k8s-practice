@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgresql
-  namespace: gitlab
+  namespace: gitlab-app
   labels:
     app: gitlab
 spec:
@@ -17,7 +17,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: pv-gitlab-postgres
-  namespace: gitlab
+  namespace: gitlab-app
 spec:
   accessModes:
     - ReadWriteOnce
@@ -29,7 +29,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgresql
-  namespace: gitlab
+  namespace: gitlab-app
   labels:
     app: gitlab
 spec:
@@ -37,7 +37,7 @@ spec:
     type: Recreate
   template:
     metadata:
-      namespace: gitlab
+      namespace: gitlab-app
       labels:
         app: gitlab
         tier: postgreSQL
