@@ -1,25 +1,27 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-nginx-log
+  name: nfs-apache-log
+  namespace: apache
 spec:
   capacity:
     storage: 1Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    path: /var/nfs_storage/nginx-log
+    path: /var/nfs_storage/apache-log
     server: 192.168.1.40
     readOnly: false
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-nginx-log
+  name: nfs-apache-log
+  namespace: apache
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
@@ -27,31 +29,33 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
+  name: apache
+  namespace: apache
   labels:
-    app: nginx
+    app: apache
 spec:
   containers:
-    - name: nginx
-      image: nginx:latest
+    - name: apache
+      image: httpd:latest
       ports:
         - containerPort: 80
           name: "http-server"
       volumeMounts:
         - name: log-volume
-          mountPath: "/var/log/nginx"
+          mountPath: "/var/log/apache"
   volumes:
     - name: log-volume
       persistentVolumeClaim:
-        claimName: nfs-nginx-log
+        claimName: nfs-apache-log
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-svc
+  name: apache-svc
+  namespace: apache
 spec:
   ports:
     - port: 80
       protocol: TCP
   selector:
-    app: nginx
+    app: apache

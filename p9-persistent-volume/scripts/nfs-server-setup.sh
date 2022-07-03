@@ -19,12 +19,13 @@ cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 # Step 1. nfs server 설치
 ##########################################################
 
+# nfs 서버 모듈 설치 (아무것도 묻지않고 기본값으로 설치하도록 한다)
 export DEBIAN_FRONTEND=noninteractive
-
 apt install -y nfs-kernel-server nfs-common
 
-mkdir -p /var/nfs_storage
-chmod 777 /var/nfs_storage
+# 로그를 저장할 2개의 디렉토리 생성
+mkdir -p /var/nfs_storage/{apache-log,nginx-log}
+chmod -R 777 /var/nfs_storage
 
 # 샘플 파일 생성
 cat <<EOF | tee /var/nfs_storage/hello.txt
@@ -37,5 +38,5 @@ EOF
 
 systemctl restart nfs-server
 
+# nfs 공유 상태 보기
 exportfs
-
