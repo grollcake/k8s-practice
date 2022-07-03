@@ -8,7 +8,7 @@ fi
 
 # master 노드에서만 실행한다.
 if [ "$HOSTNAME" != "k8s-master" ]; then
-    echo "All Done. Run manual command 'kubeadm join ...'"
+    echo "마스터 노드에서만 실행가능합니다."
     exit
 fi
 
