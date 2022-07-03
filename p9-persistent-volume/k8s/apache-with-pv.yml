@@ -47,7 +47,7 @@ spec:
           name: "http-server"
       volumeMounts:
         - name: log-volume
-          mountPath: "/var/log/apache"
+          mountPath: "/var/log/apache2"
   volumes:
     - name: log-volume
       persistentVolumeClaim:
