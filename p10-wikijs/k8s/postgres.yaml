@@ -42,7 +42,7 @@ spec:
       namespace: wikijs-app
       labels:
         app: wikijs
-        tier: app
+        tier: db
     spec:
       containers:
         - image: postgres:9.6.2-alpine
