@@ -19,8 +19,7 @@ cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 # Step 1. Persistent Volume 준비
 ##########################################################
 
-mkdir -p ~k8s/gitlab-k8s-data
-kubectl apply -f k8s/local-volumes.yaml
+kubectl apply -f k8s/nfs-volumes.yaml
 
 ##########################################################
 # Step 2. gitlab 배포

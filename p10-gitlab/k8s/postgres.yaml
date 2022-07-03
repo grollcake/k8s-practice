@@ -15,17 +15,15 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: postgres-claim
-  labels:
-    app: gitlab
+  name: pv-gitlab-postgres
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 1Gi
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgresql
@@ -59,4 +57,4 @@ spec:
       volumes:
         - name: postgresql
           persistentVolumeClaim:
-            claimName: postgres-claim
+            claimName:  pv-gitlab-postgres
