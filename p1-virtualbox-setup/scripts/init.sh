@@ -24,7 +24,7 @@ service ntp restart
 ntpq -p
 
 # nfs client
-apt -y install nfs-common cifs-utils
+apt -y install nfs-common
 
 # cluser host 등록
 sh -c "echo 192.168.0.10  k8s-master >> /etc/hosts"

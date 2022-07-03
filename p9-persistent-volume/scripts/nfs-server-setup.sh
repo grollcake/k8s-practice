@@ -21,13 +21,18 @@ cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 export DEBIAN_FRONTEND=noninteractive
 
-apt install -y nfs-kernel-server portmap
+apt install -y nfs-kernel-server nfs-common
 
 mkdir -p /var/nfs_storage
 chmod 777 /var/nfs_storage
 
+# 샘플 파일 생성
+cat <<EOF | tee /var/nfs_storage/hello.txt
+Hello
+EOF
+
 cat <<EOF | tee /etc/exports
-/var/nfs_storage 192.168.1.0/24(rw)
+/var/nfs_storage 192.168.1.0/24(rw,sync,no_subtree_check,no_root_squash)
 EOF
 
 systemctl restart nfs-server

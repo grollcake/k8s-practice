@@ -10,6 +10,6 @@ fi
 # Step 1. nfs server 설치
 ##########################################################
 
-sudo apt-get -y install nfs-common cifs-utils
+sudo apt-get -y install nfs-common
 
 sudo mount -t nfs 192.168.1.40:/var/nfs_storage /home/k8s/nfs-share
