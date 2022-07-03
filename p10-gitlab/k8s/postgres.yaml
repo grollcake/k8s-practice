@@ -33,8 +33,10 @@ metadata:
   labels:
     app: gitlab
 spec:
-  strategy:
-    type: Recreate
+  selector:
+    matchLabels:
+      app: gitlab
+      tier: postgreSQL
   template:
     metadata:
       namespace: gitlab-app
