@@ -24,9 +24,11 @@ export DEBIAN_FRONTEND=noninteractive
 apt install -y nfs-kernel-server nfs-common
 
 # 로그를 저장할 2개의 디렉토리 생성
-mkdir -p /var/nfs_storage/apache-log
-mkdir -p /var/nfs_storage/nginx-log
-chmod -R 777 /var/nfs_storage
+mkdir -p /var/nfs_storage
+chmod 777 /var/nfs_storage
+runuser -l k8s -c 'mkdir -p /var/nfs_storage/apache-log'
+runuser -l k8s -c 'mkdir -p /var/nfs_storage/nginx-log'
+
 
 # 샘플 파일 생성
 cat <<EOF | tee /var/nfs_storage/hello.txt
