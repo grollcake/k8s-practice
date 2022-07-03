@@ -19,4 +19,4 @@ cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 # Step 1. Apache에 PV 할당하여 생성
 ##########################################################
 
-kubectl apply -f k8s/apache-with-pv
+kubectl apply -f k8s/apache-with-pv.yml
