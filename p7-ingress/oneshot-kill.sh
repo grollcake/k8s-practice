@@ -27,6 +27,10 @@ kubectl apply -f - -n kube-system
 # cloud 유형으로 ingress를 설치한다.
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
 
+# 설치 완료 대기
+echo "-- Waiting for ingress-nginx ready -----------------------------------"
+kubectl wait pod --for=condition=Ready -l app.kubernetes.io/component=controller -n ingress-nginx
+
 # 상태 조회
 kubectl get all -n ingress-nginx
 
@@ -42,7 +46,14 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manif
 kubectl apply -f k8s/metallb-configmap.yml
 
 ##########################################################
-# Step 3. Imaginary에 ingress 적용
+# Step 3. dashboard에 ingress 적용
+##########################################################
+
+# dashboard에 ingress 적용
+kubectl apply -f k8s/dashboard-ingress.yml
+
+##########################################################
+# Step 4. Imaginary에 ingress 적용
 ##########################################################
 
 # Imaginary에 ingress 적용
