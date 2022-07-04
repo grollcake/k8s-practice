@@ -68,3 +68,9 @@ kubectl get svc -n ingress-nginx
 
 # 외부 연결 도메인 확인
 kubectl describe ingress
+
+##########################################################
+# Step 5. 접속 가이드
+##########################################################
+echo "https://dashboard.192.168.1.100.sslip.io"
+echo "http://imaginary.192.168.1.100.sslip.io"
