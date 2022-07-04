@@ -13,7 +13,7 @@ fi
 sudo swapoff -a
 sudo sed -i '/swap/s/^/#/' /etc/fstab
 
-sysctl --system
+sudo sysctl --system
 
 ##########################################################
 # Step 1. Docker 설치
@@ -62,11 +62,11 @@ sudo usermod -aG docker k8s
 ##########################################################
 
 # iptables가 브리지된 트래픽을 보게 하기
-cat <<EOF | tee /etc/modules-load.d/k8s.conf
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 br_netfilter
 EOF
 
-cat <<EOF | tee /etc/sysctl.d/k8s.conf
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
