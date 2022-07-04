@@ -29,7 +29,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 
 # 설치 완료 대기
 echo "-- Waiting for ingress-nginx ready -----------------------------------"
-kubectl wait pod --for=condition=Ready -l app.kubernetes.io/component=controller -n ingress-nginx
+kubectl wait pod --for=condition=Ready -l app.kubernetes.io/component=controller -n ingress-nginx --timeout=5m
 
 # 상태 조회
 kubectl get all -n ingress-nginx
