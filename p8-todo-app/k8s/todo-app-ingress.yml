@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: todo-app-ingress
+  namespace: todo-app
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
@@ -14,6 +15,5 @@ spec:
             backend:
               service:
                 name: todo-app
-                namespace: todo-app
                 port:
                   number: 80

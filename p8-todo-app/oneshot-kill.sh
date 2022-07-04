@@ -26,8 +26,8 @@ git clone https://github.com/johscheuer/todo-app-web.git ~/todo-app-web
 kubectl apply -f ~/todo-app-web/k8s-deployment/
 
 # 배포가 완료되길 대기
-echo "-- Waiting for service ready -----------------------------------"
-kubectl wait pod --for=condition=Ready -l app=todo-app -n todo-app
+echo "-- Waiting for todo app is ready -----------------------------------"
+kubectl wait pod --for=condition=Ready -l app=todo-app -n todo-app --timeout=5m
 sleep 1
 
 # 상태 확인
