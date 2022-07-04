@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app
+  namespace: todo-app
+  labels:
+    app: todo-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: todo-app
+  template:
+    metadata:
+      name: todo-app
+      namespace: todo-app
+      labels:
+        app: todo-app
+    spec:
+      volumes:
+      - name: todo-app-config
+        configMap:
+          name: todo-app-config
+      containers:
+        - name: "todo-app"
+          image: "johscheuer/todo-app-web:v6"
+          command: ["./todo-app"]
+          args: ["-config-file", "/etc/todo-app/redis.config"]
+          resources:
+            limits:
+              cpu: 100m
+              memory: 500Mi
+            requests:
+              cpu: 100m
+              memory: 500Mi
+          volumeMounts:
+          - name: todo-app-config
+            mountPath: /etc/todo-app
+          ports:
+            - containerPort: 3000
+              protocol: "TCP"
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: 3000
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 10
+            timeoutSeconds: 5

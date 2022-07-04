@@ -19,11 +19,8 @@ cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 # Step 1. todo-app 배포
 ##########################################################
 
-# 소스코드 내려받기
-git clone https://github.com/johscheuer/todo-app-web.git ~/todo-app-web
-
 # k8s deploy
-kubectl apply -f ~/todo-app-web/k8s-deployment/
+kubectl apply -f k8s/
 
 # 배포가 완료되길 대기
 echo "-- Waiting for todo app is ready -----------------------------------"
