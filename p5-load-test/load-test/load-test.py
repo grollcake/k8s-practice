@@ -6,7 +6,7 @@ import requests
 import threading
 
 
-IMAGINARY_ENDPOINT = "http://192.168.1.10:30000"
+IMAGINARY_ENDPOINT = "http://192.168.0.10:30000"
 SAMPLE_IMAGE = os.path.join(os.path.dirname(__file__), 'sample.jpg')
 CONVERTED_IMAGE_PATH = os.path.join(os.path.dirname(__file__), 'converted')
 

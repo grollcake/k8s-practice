@@ -15,7 +15,7 @@ cd $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # requests 모듈이 설치되지 않은 경우 설치부터 한다.
 if ! ( $(python3 -c 'import requests' 2> /dev/null) ); then
-    esudo apt install -y python3-pip
+    sudo apt install -y python3-pip
     pip3 install -r load-test/requirements.txt
 fi
 

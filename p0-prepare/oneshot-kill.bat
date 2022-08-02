@@ -7,13 +7,16 @@ C:\ProgramData\chocolatey\bin\choco.exe install -y virtualbox --version 6.1.30
 REM 3. Vagrant
 C:\ProgramData\chocolatey\bin\choco.exe install -y vagrant
 
-REM 4. Postman
+REM 4. Tabby
+C:\ProgramData\chocolatey\bin\choco.exe install -y tabby
+
+REM 5. Postman
 C:\ProgramData\chocolatey\bin\choco.exe install -y postman
 
-REM 5. typora
+REM 6. typora
 C:\ProgramData\chocolatey\bin\choco.exe install -y typora
 
-REM 6. Lens
+REM 7. Lens
 C:\ProgramData\chocolatey\bin\choco.exe install -y lens
 
 set /p DUMMY=All done!!

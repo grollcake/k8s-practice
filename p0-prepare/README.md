@@ -43,22 +43,20 @@ choco install -y vagrant
 
 
 
-### 4. Postman 설치
+### 4. Tabby 설치
+
+```
+choco install -y tabby
+```
+
+
+
+### 5. Postman 설치
 
 `postman`으로 API 호출을 쉽게 테스트해볼 수 있다.
 
 ```
 choco install -y postman
-```
-
-
-
-### 5. Python 설치
-
-부하 테스트는 파이썬으로 작성되어 있어 실행하려면 필요하다.
-
-```
-choco install -y python
 ```
 
 

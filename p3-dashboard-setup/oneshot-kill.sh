@@ -26,28 +26,19 @@ kubectl apply -f k8s/dashboard-recommended.yml
 kubectl apply -f k8s/dashboard-admin-user.yml
 
 # admin-user 로그인 토큰 생성
+token=$(kubectl -n kubernetes-dashboard create token admin-user)
+
+# admin-user 토큰을 kube config 파일에 추가
+echo "    token: $token" >> ~/.kube/config
+
 echo "-- dashboard admin-user login token -----------------------------------"
-kubectl -n kubernetes-dashboard create token admin-user
+echo $token
 echo "-----------------------------------------------------------------------"
 
 
 ##########################################################
-# Step 2. apiserver의 인증서에 192.168.1.10 아이피 추가
+# Step 2. Lens 접속 용 kube config 출력
 ##########################################################
-
-# apiserver의 기존 인증서 백업
-sudo mv /etc/kubernetes/pki/apiserver.crt /etc/kubernetes/pki/apiserver.crt.orig
-sudo mv /etc/kubernetes/pki/apiserver.key /etc/kubernetes/pki/apiserver.key.orig
-
-# SAN(Subject Alternative Name)에 192.168.1.10 아이피 추가
-sudo kubeadm init phase certs apiserver --apiserver-cert-extra-sans "192.168.0.10,192.168.1.10"
-
-# 인증서에 SAN 아이피 반영 확인
-openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text | grep 192.168
-
-# kubectl 명령어가 잘 실행되면 잘 반영된 것
-sleep 1
-kubectl get all 
 
 # Lens에 추가할 kubeconfig 정보 출력
 echo
