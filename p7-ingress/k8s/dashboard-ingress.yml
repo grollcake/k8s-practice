@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
-    - host: dashboard.192.168.1.100.sslip.io
+    - host: dashboard.192.168.0.100.sslip.io
       http:
         paths:
           - path: /

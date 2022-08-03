@@ -72,5 +72,5 @@ kubectl describe ingress
 ##########################################################
 # Step 5. 접속 가이드
 ##########################################################
-echo "https://dashboard.192.168.1.100.sslip.io"
-echo "http://imaginary.192.168.1.100.sslip.io"
+echo "https://dashboard.192.168.0.100.sslip.io"
+echo "http://imaginary.192.168.0.100.sslip.io"
