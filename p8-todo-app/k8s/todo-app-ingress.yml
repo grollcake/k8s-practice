@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
-    - host: todo.192.168.1.100.sslip.io
+    - host: todo.192.168.0.100.sslip.io
       http:
         paths:
           - path: /

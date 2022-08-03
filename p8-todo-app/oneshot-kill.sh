@@ -35,7 +35,7 @@ kubectl get all,ep,ingress -o wide -n todo-app
 # Step 2. ingress 적용
 ##########################################################
 
-# ingress 적용: todo.192.168.1.100.sslip.io
+# ingress 적용: todo.192.168.0.100.sslip.io
 kubectl apply -f k8s/todo-app-ingress.yml
 
 # 상태 확인
@@ -43,4 +43,4 @@ echo "kubectl get all,ep,ingress -o wide -n todo-app"
 kubectl get all,ep,ingress -o wide -n todo-app
 
 # 접속 확인
-echo "http://todo.192.168.1.100.sslip.io"
+echo "http://todo.192.168.0.100.sslip.io"
