@@ -12,4 +12,4 @@ fi
 
 sudo apt-get -y install nfs-common
 
-# sudo mount -t nfs 192.168.1.40:/var/nfs_storage /home/k8s/nfs-share
+# mkdir -p /home/k8s/nfs-share && sudo mount -t nfs 192.168.0.40:/var/nfs_storage /home/k8s/nfs-share

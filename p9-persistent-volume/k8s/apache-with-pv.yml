@@ -16,7 +16,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /var/nfs_storage/apache-log
-    server: 192.168.1.40
+    server: 192.168.0.40
     readOnly: false
 ---
 apiVersion: v1

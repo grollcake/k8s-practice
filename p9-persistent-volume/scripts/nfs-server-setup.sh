@@ -36,7 +36,7 @@ Hello
 EOF
 
 cat <<EOF | tee /etc/exports
-/var/nfs_storage 192.168.1.0/24(rw,sync,no_subtree_check,no_root_squash)
+/var/nfs_storage 192.168.0.0/24(rw,sync,no_subtree_check,no_root_squash)
 EOF
 
 systemctl restart nfs-server
