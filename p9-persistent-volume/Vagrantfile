@@ -1,16 +1,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-nic1 = "Intel(R) Wi-Fi 6 AX200 160MHz"
-nic2 = "Intel(R) Wi-Fi 6E AX211 160MHz"
-nic3 = "Intel(R) Wireless-AC 9560 160MHz #2"
-
 Vagrant.configure("2") do |config|
   config.vm.define "nfs-server" do |config|
     config.vm.box = "generic/ubuntu2004"
     config.vm.hostname = "nfs-server"
-    config.vm.network "public_network", ip: "192.168.0.40", bridge: ["#{nic1}", "#{nic2}", "#{nic3}"]
-    config.vm.network "private_network", ip: "192.168.1.40", :adapter => 3
+    config.vm.network "private_network", ip: "192.168.1.40", :adapter => 2
     config.vm.box_check_update = false
     config.vm.disk :disk, name: "disk1", size: "10GB", primary: true
 
@@ -18,7 +13,6 @@ Vagrant.configure("2") do |config|
       vb.name = "nfs-server"
       vb.cpus = 2
       vb.memory = "2048"  # Customize the amount of memory on the VM:
-      vb.customize ["modifyvm", :id, "--nic2", "natnetwork"]
       vb.gui = false # Display the VirtualBox GUI when booting the machine
     end
   end
