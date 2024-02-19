@@ -35,7 +35,7 @@ choco install -y virtualbox --version 6.1.30
 
 ### 3. Vagrant 설치
 
-`vagrant`를 이용하면 code로 VirtualBox VM을 생성할 수가 있다. 
+`vagrant`를 이용하면 설정 파일(code)로 VirtualBox VM을 생성할 수가 있다. 
 
 ```
 choco install -y vagrant
@@ -44,6 +44,8 @@ choco install -y vagrant
 
 
 ### 4. Tabby 설치
+
+현대적인 ssh 클라이언트로 putty 대신 사용하기 좋다.
 
 ```
 choco install -y tabby
@@ -63,7 +65,7 @@ choco install -y postman
 
 ### 6. Typora 설치
 
-실습 설명서는 마크다운(md)으로 작성되어 있는데 편집기는 typora가 제일 좋다.
+실습 설명서는 마크다운(md)으로 작성하였고 편집기는 typora가 제일 좋다.
 
 ```
 choco install -y typora
