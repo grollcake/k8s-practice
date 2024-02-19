@@ -1,3 +1,13 @@
+@echo off
+net session >nul 2>&1
+if %errorLevel% neq 0 (
+    echo Must be run with administrator privileges
+    pause
+    exit
+)
+
+@echo on
+
 REM 1. choco
 @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command " [System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
