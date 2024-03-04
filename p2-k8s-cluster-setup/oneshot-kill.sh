@@ -86,8 +86,9 @@ sudo apt-mark hold kubelet kubeadm kubectl
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 
-# cri 비활성화를 해제
-sudo sed -i '/disabled_plugins/s/^/#/' /etc/containerd/config.toml
+# Ubuntu 20.04 / containerd.io 1.3.7 이상에서는 config.toml 파일이 존재하면 kubeadm init 할 때 오류가 발생한다.
+# 오류: "container is not runtime runnig unknown service runtime.v1.RuntimeService error"
+sudo rm /etc/containerd/config.toml
 sudo systemctl restart containerd
 
 # 쿠버네티스 bash 명령어 자동완성 지원
