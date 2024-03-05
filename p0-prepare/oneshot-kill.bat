@@ -26,7 +26,13 @@ C:\ProgramData\chocolatey\bin\choco.exe install -y postman
 REM 6. typora
 C:\ProgramData\chocolatey\bin\choco.exe install -y typora
 
-REM 7. Lens
-C:\ProgramData\chocolatey\bin\choco.exe install -y lens
+REM 7. OpenLens
+C:\ProgramData\chocolatey\bin\choco.exe install -y openlens
+
+REM 8. Git
+C:\ProgramData\chocolatey\bin\choco.exe install -y git
+
+REM 9. VSCode
+C:\ProgramData\chocolatey\bin\choco.exe install -y vscode
 
 set /p DUMMY=All done!!

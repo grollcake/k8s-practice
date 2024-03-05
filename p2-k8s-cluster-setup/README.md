@@ -1,8 +1,22 @@
 # P2-k8s cluster setup
 
-모든 노드에 공통으로 Docker, kubectl, kubeadm, kubelet을 설치한다.
+모든 노드에 공통으로 docker, containerd, kubectl, kubeadm, kubelet을 설치한다.
 
 Master 노드에는 `kubeadm init`으로 마스터 역할을 부여하고, 워커 노드는 `kubeadm join`으로 마스터 노드에 참여한다.
+
+
+
+### 0. 설치 패키지 & 버전
+
+```
+docker-ce 5:25.0.3-1~ubuntu.20.04~focal
+docker-ce-cli 5:25.0.3-1~ubuntu.20.04~focal
+containerd.io 1.6.28-1
+kubeadm 1.28.7-1.1
+kubectl 1.28.7-1.1
+kubelet 1.28.7-1.1
+kubernetes-cni 1.2.0-2.1
+```
 
 
 
@@ -12,9 +26,10 @@ Master 노드에는 `kubeadm init`으로 마스터 역할을 부여하고, 워�
 # 패키지 업데이트
 sudo apt update && sudo apt upgrade
 
-# swap off -- k8s는 swap을 사용하지 않는다.
+# swap off -- k8s 권고 사항
 sudo swapoff -a
-sudo vi /etc/fstab  # SWAP이 정의된 줄을 '#'으로 주석처리해준다.
+sudo sed -i '/swap/s/^/#/' /etc/fstab
+sudo sysctl --system  # 커널 파라미터를 적용하고 재로드
 
 # NTP(Network Time Protocol) 설정 -- node간 시간 동기화 용도
 sudo apt install ntp
@@ -45,13 +60,16 @@ sudo sysctl --system
 sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common gnupg2
 
 # 도커 공식 GPG 키 추가:
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key --keyring /etc/apt/trusted.gpg.d/docker.gpg add -
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
 # 도커 apt 리포지터리 추가:
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # 도커 CE 설치
-sudo apt-get update && sudo apt-get install -y containerd.io=1.2.13-2 docker-ce=5:19.03.11~3-0~ubuntu-$(lsb_release -cs) docker-ce-cli=5:19.03.11~3-0~ubuntu-$(lsb_release -cs)
+sudo apt-get install -y containerd.io=1.6.28-1 \
+     docker-ce=5:25.0.3-1~ubuntu.20.04~$(lsb_release -cs) \
+     docker-ce-cli=5:25.0.3-1~ubuntu.20.04~$(lsb_release -cs)
+# sudo apt install -y docker-ce docker-ce-cli containerd.io
 
 ## /etc/docker 생성
 sudo mkdir /etc/docker
@@ -88,23 +106,25 @@ Master, Worker 모든 노드에 설치한다.
 
 ```bash
 # 구글 클라우드 퍼블릭 키 다운로드
-curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /usr/share/keyrings/kubernetes-apt-keyring.gpg
 
 # 쿠버네티스를 설치하기 위해 Kubernetes 저장소 추가
-echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 # kubelet, kubeadm, kubectl를 설치
 apt-get update
-apt-get install -y kubelet kubeadm kubectl
+apt-get install -y kubelet=1.28.7-1.1 kubeadm=1.28.7-1.1 kubectl=1.28.7-1.1
 apt-mark hold kubelet kubeadm kubectl
 
 # 쿠버네티스를 서비스 등록 및 재시작
 systemctl daemon-reload
 systemctl restart kubelet
 
-# (문제해결) cri 비활성화를 해제
-sed -i '/disabled_plugins/s/^/#/' /etc/containerd/config.toml
-systemctl restart containerd
+# (문제해결) Ubuntu 20.04 / containerd.io 1.3.7 이상에서는 config.toml 파일이 존재하면 kubeadm init 할 때 오류가 발생한다.
+# 오류: "container is not runtime runnig unknown service runtime.v1.RuntimeService error"
+sudo rm /etc/containerd/config.toml
+sudo systemctl restart containerd
+
 ```
 
 
@@ -117,7 +137,7 @@ pod-network-cidr을 Weave.net의 IPALLOC_RANGE에도 동일하게 적용하여 �
 sudo kubeadm init --apiserver-advertise-address=192.168.0.10 --pod-network-cidr 10.32.0.0/12
 
 # Weave.net CNI 설치
-kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')&env.IPALLOC_RANGE=10.32.0.0/12"
+sudo kubectl apply -f "https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml"
 ```
 위 명령어 실행의 결과로 나오는 명령어를 node 서버에서 실행하면 자동으로 node로 합류하게 된다.
 
@@ -150,7 +170,7 @@ kubectl get nodes -o wide
 
 
 
-### 문제 해결
+### 문제 해결 (updated: '24.03월 현재 더 이상 발생하지 않는다)
 
 ##### (1) container runtime is not running
 

@@ -14,7 +14,7 @@
 @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command " [System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 ```
 
-choco 설치 확인. 명령어를 찾지 못한다면 시스템 Path를 못 읽어서 그런거니까 CMD를 재실행한다.
+choco 설치 확인. 명령어를 찾지 못한다면 Path를 못 읽어서 그런 것이니까 CMD를 재실행한다.
 
 ```
 choco -V
@@ -73,11 +73,30 @@ choco install -y typora
 
 
 
-### 7. Lens 설치
+### 7. OpenLens 설치
 
-쿠버네티스를 관리할 수 있는 설치형 프로그램
+쿠버네티스를 관리할 수 있는 오픈소스 설치형 프로그램
 
 ```
-choco install -y lens
+choco install -y openlens
 ```
 
+
+
+### 8. Git 설치
+
+Git이 설명이 필요한가?
+
+```
+choco install -y git
+```
+
+
+
+### 9. VSCode 설치
+
+최고의 코드 에디터
+
+```
+choco install -y vscode
+```

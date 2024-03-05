@@ -51,7 +51,7 @@ eth1을 이용하며 네트워크는 192.168.0.0/24 대역을 사용한다.
 Windows의 CLI 패키지 설치 관리자인 chocolate를 이용한다.
 
 ```
-choco install vagrant
+choco install -y vagrant
 ```
 
 (참고) vagrant 명령어
@@ -131,9 +131,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-
-
-`vagrant up ` 명령어로 vm을 생성한다. 약 25~30분 가량이 소요된다.
+`vagrant up ` 명령어로 vm을 생성한다. 약 20분 가량이 소요된다.
 
 
 

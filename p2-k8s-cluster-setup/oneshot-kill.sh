@@ -13,7 +13,7 @@ fi
 sudo swapoff -a
 sudo sed -i '/swap/s/^/#/' /etc/fstab
 
-sudo sysctl --system
+sudo sysctl --system  # 커널 파라미터를 적용하고 재로드
 
 ##########################################################
 # Step 1. Docker 설치
@@ -32,8 +32,10 @@ echo \
 
 # 도커 CE 설치
 sudo apt-get update 
-#sudo apt-get install -y containerd.io=1.2.13-2 docker-ce=5:19.03.11~3-0~ubuntu-$(lsb_release -cs) docker-ce-cli=5:19.03.11~3-0~ubuntu-$(lsb_release -cs)
-sudo apt install -y docker-ce docker-ce-cli containerd.io
+#sudo apt install -y docker-ce docker-ce-cli containerd.io
+sudo apt-get install -y containerd.io=1.6.28-1 \
+     docker-ce=5:25.0.3-1~ubuntu.20.04~$(lsb_release -cs) \
+     docker-ce-cli=5:25.0.3-1~ubuntu.20.04~$(lsb_release -cs)
 
 ## /etc/docker 생성
 sudo mkdir -p /etc/docker
@@ -76,23 +78,21 @@ net.bridge.bridge-nf-call-iptables = 1
 EOF
 
 # 구글 클라우드 퍼블릭 키 다운로드
-#sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://dl.k8s.io/apt/doc/apt-key.gpg
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /usr/share/keyrings/kubernetes-apt-keyring.gpg
 
 # 쿠버네티스를 설치하기 위해 Kubernetes 저장소 추가
-#echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 echo "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 # kubelet, kubeadm, kubectl를 설치
 sudo apt-get update
-sudo apt-get install -y kubelet kubeadm kubectl
+apt-get install -y kubelet=1.28.7-1.1 kubeadm=1.28.7-1.1 kubectl=1.28.7-1.1
 sudo apt-mark hold kubelet kubeadm kubectl
 
 # 쿠버네티스를 서비스 등록 및 재시작
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 
-# Ubuntu 20.04 / containerd.io 1.3.7 이상에서는 config.toml 파일이 존재하면 kubeadm init 할 때 오류가 발생한다.
+# (문제해결) Ubuntu 20.04 / containerd.io 1.3.7 이상에서는 config.toml 파일이 존재하면 kubeadm init 할 때 오류가 발생한다.
 # 오류: "container is not runtime runnig unknown service runtime.v1.RuntimeService error"
 sudo rm /etc/containerd/config.toml
 sudo systemctl restart containerd
