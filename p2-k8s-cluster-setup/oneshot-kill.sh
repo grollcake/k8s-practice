@@ -85,7 +85,7 @@ echo "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.gpg] https://pkg
 
 # kubelet, kubeadm, kubectl를 설치
 sudo apt-get update
-apt-get install -y kubelet=1.28.7-1.1 kubeadm=1.28.7-1.1 kubectl=1.28.7-1.1
+sudo apt-get install -y kubelet=1.28.7-1.1 kubeadm=1.28.7-1.1 kubectl=1.28.7-1.1
 sudo apt-mark hold kubelet kubeadm kubectl
 
 # 쿠버네티스를 서비스 등록 및 재시작
