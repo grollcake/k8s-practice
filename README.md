@@ -1,6 +1,13 @@
 # K8S Practice
 
 
+>유튜브 44Bit 채널에서 제공한 **초보를 위한 쿠버네티스 안내서**를 요약하였다.
+>
+>아래 영상을 미리 시청한다면 이해에 큰 도움이 될 것이다.
+>
+>https://youtube.com/playlist?list=PLIUCBpK1dpsNf1m-2kiosmfn2nXfljQgb&si=Jy1CsjPC8a_bIKFS
+
+
 
 #### kubernetes
 
