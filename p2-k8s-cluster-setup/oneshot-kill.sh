@@ -16,7 +16,7 @@ sudo sed -i '/swap/s/^/#/' /etc/fstab
 sudo sysctl --system  # 커널 파라미터를 적용하고 재로드
 
 ##########################################################
-# Step 1. Docker 설치
+# Step 1. Docker,  containerd 설치
 ##########################################################
 
 # apt가 HTTPS로 리포지터리를 사용하는 것을 허용하기 위한 패키지 설치
@@ -32,7 +32,6 @@ echo \
 
 # 도커 CE 설치
 sudo apt-get update 
-#sudo apt install -y docker-ce docker-ce-cli containerd.io
 sudo apt-get install -y containerd.io=1.6.28-1 \
      docker-ce=5:25.0.3-1~ubuntu.20.04~$(lsb_release -cs) \
      docker-ce-cli=5:25.0.3-1~ubuntu.20.04~$(lsb_release -cs)
