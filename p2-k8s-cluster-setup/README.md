@@ -16,6 +16,7 @@ kubeadm 1.28.7-1.1
 kubectl 1.28.7-1.1
 kubelet 1.28.7-1.1
 kubernetes-cni 1.2.0-2.1
+weave 2.8.1
 ```
 
 
