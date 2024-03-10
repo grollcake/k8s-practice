@@ -69,7 +69,6 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docke
 sudo apt-get install -y containerd.io=1.6.28-1 \
      docker-ce=5:25.0.3-1~ubuntu.20.04~$(lsb_release -cs) \
      docker-ce-cli=5:25.0.3-1~ubuntu.20.04~$(lsb_release -cs)
-# sudo apt install -y docker-ce docker-ce-cli containerd.io
 
 ## /etc/docker 생성
 sudo mkdir /etc/docker
@@ -146,7 +145,7 @@ sudo kubectl apply -f "https://github.com/weaveworks/weave/releases/download/v2.
 k8s 계정으로 kubectl 명령어 사용가능하게 설정
 
 ```bash
-# 모든 사용자가 kube 명령어를 사용할 수 있게 하기 위해 다음을 설정한다.
+# 현재 kubectl 명령어를 사용할 수 있게 하기 위해 다음을 설정한다.
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
