@@ -35,4 +35,4 @@ C:\ProgramData\chocolatey\bin\choco.exe install -y git
 REM 9. VSCode
 C:\ProgramData\chocolatey\bin\choco.exe install -y vscode
 
-set /p DUMMY=All done!!
+set /p DUMMY=All done!! Reboot Computer

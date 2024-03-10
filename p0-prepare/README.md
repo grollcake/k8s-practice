@@ -100,3 +100,8 @@ choco install -y git
 ```
 choco install -y vscode
 ```
+
+
+
+### 10. 리부팅 필요
+
