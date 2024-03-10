@@ -16,6 +16,7 @@ kubeadm 1.28.7-1.1
 kubectl 1.28.7-1.1
 kubelet 1.28.7-1.1
 kubernetes-cni 1.2.0-2.1
+weave 2.8.1
 ```
 
 
@@ -53,7 +54,7 @@ sudo sysctl --system
 
 
 
-### 2. k8s 런타임으로 docker 설치
+### 2. k8s 런타임으로 docker, containerd 설치
 
 ```bash
 # apt가 HTTPS로 리포지터리를 사용하는 것을 허용하기 위한 패키지 설치
@@ -69,7 +70,6 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docke
 sudo apt-get install -y containerd.io=1.6.28-1 \
      docker-ce=5:25.0.3-1~ubuntu.20.04~$(lsb_release -cs) \
      docker-ce-cli=5:25.0.3-1~ubuntu.20.04~$(lsb_release -cs)
-# sudo apt install -y docker-ce docker-ce-cli containerd.io
 
 ## /etc/docker 생성
 sudo mkdir /etc/docker
@@ -135,18 +135,23 @@ pod-network-cidr을 Weave.net의 IPALLOC_RANGE에도 동일하게 적용하여 �
 
 ```bash
 sudo kubeadm init --apiserver-advertise-address=192.168.0.10 --pod-network-cidr 10.32.0.0/12
-
-# Weave.net CNI 설치
-sudo kubectl apply -f "https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml"
 ```
 위 명령어 실행의 결과로 나오는 명령어를 node 서버에서 실행하면 자동으로 node로 합류하게 된다.
+
+
+
+Weave.net CNI를 설치한다.
+
+```
+sudo kubectl apply -f "https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml"
+```
 
 
 
 k8s 계정으로 kubectl 명령어 사용가능하게 설정
 
 ```bash
-# 모든 사용자가 kube 명령어를 사용할 수 있게 하기 위해 다음을 설정한다.
+# 현재 kubectl 명령어를 사용할 수 있게 하기 위해 다음을 설정한다.
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -156,7 +161,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 ### 5. node 설정
 
-`kubeadm init` 명령의 결과로 나온 `kubeadm join ...` 명령어를 실행한다.
+`kubeadm init` 명령의 결과로 나온 `kubeadm join ...` 명령어를 k8s-node, k8s-node에서 각각 실행한다.
 
 
 

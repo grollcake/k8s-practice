@@ -14,10 +14,10 @@
 
 ##### 공통구성
 
-| 항목     | 내용                | 비고 |
-| -------- | ------------------- | ---- |
-| Base O/S | Ubuntu-20.04-Server |      |
-| Username | k8s / k8s           |      |
+| 항목     | 내용                | 비고                 |
+| -------- | ------------------- | -------------------- |
+| Base O/S | Ubuntu-20.04-Server |                      |
+| Username | k8s / k8s           | 아이디 패스워드 동일 |
 
 ##### VM별 구성
 
@@ -32,7 +32,7 @@
 
 ### VirtualBox 버전 선택
 
-6.1.30 버전을 설치해야만 한다. 최신 버전인 6.1.34는 CPU Lock 오류가 발생한다.
+현재 시점의 최신버전인 7.0.14를 사용한다. 
 
 
 
@@ -57,7 +57,7 @@ choco install -y vagrant
 (참고) vagrant 명령어
 
 ```
-vagrant init | up | status | ssh | halt | destroy
+vagrant init | up | reload | status | ssh | halt | destroy
 ```
 
 
@@ -65,6 +65,12 @@ vagrant init | up | status | ssh | halt | destroy
 ### Vagrant를 이용한 Ubuntu VM 설치
 
 먼저 `vagrant init`명령어로 초기 설정 파일 `Vagrantfile`을 생성한 후 아래 내용으로 저장한다.
+
+* VM은 우분투 20.04 서버 버전을 사용하며 CPU 2Core, 2GB 메모리, 10GB의 내장 디스크를 생성
+* 2번째 NIC를 생성하고 각 노드별로 192.168.0.10, 192.168.0.20, 192.168.0.30 아이피 부여
+* 사용자 계정 k8s / k8s 생성
+* Github에서 k8s-practice 실습 파일 복제
+* 패키지를 최신 버전으로 업데이트하고 NTP와 NFS Client 설치
 
 ```ruby
 # -*- mode: ruby -*-
@@ -131,7 +137,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-`vagrant up ` 명령어로 vm을 생성한다. 약 20분 가량이 소요된다.
+`vagrant up ` 명령어로 vm을 생성한다. 약 10분 가량 소요된다.
 
 
 
