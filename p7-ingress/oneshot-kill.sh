@@ -46,15 +46,11 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.12.1/manif
 kubectl apply -f k8s/metallb-configmap.yml
 
 ##########################################################
-# Step 3. dashboard에 ingress 적용
+# Step 3. dashboard, Imaginary에 ingress 적용
 ##########################################################
 
 # dashboard에 ingress 적용
 kubectl apply -f k8s/dashboard-ingress.yml
-
-##########################################################
-# Step 4. Imaginary에 ingress 적용
-##########################################################
 
 # Imaginary에 ingress 적용
 kubectl apply -f k8s/imaginary-service.yml
@@ -70,7 +66,7 @@ kubectl get svc -n ingress-nginx
 kubectl describe ingress
 
 ##########################################################
-# Step 5. 접속 가이드
+# Step 4. 접속 가이드
 ##########################################################
 echo "https://dashboard.192.168.0.100.sslip.io"
 echo "http://imaginary.192.168.0.100.sslip.io"
