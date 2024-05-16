@@ -28,7 +28,7 @@ choco -V
 최신 버전의 virtualbox에서는 cpu lock 문제가 빈번하게 발생하므로 옛 버전을 설치토록 한다.
 
 ```
-choco install -y virtualbox --version 6.1.30
+choco install -y virtualbox --version 7.0.14
 ```
 
 

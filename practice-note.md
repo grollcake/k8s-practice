@@ -4,7 +4,9 @@
 
 * Choco, Winget 설명
 * 설치되는 프로그램 용도 설명
-* 설치 완료 후 Reboot 필요
+* 바탕화면에 설치된 프로그램 확인시켜주기
+* virtualbox 환경설정 (키보드 잡기)
+* 설치 완료 후 Reboot
 * `vagrant box add generic/ubuntu2004`
 * Hyper-V 검사점 생성 (p0-done)
 

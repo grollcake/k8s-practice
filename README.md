@@ -1,5 +1,9 @@
 # K8S Practice
 
+![image-20240516193144963](assets\practice-blueprint.png)
+
+
+
 
 >유튜브 44Bit 채널에서 제공한 **초보를 위한 쿠버네티스 안내서**를 요약하였다.
 >
