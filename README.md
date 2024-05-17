@@ -1,6 +1,6 @@
 # K8S Practice
 
-![image-20240516193144963](assets\practice-blueprint.png)
+![image-20240516193144963](./assets/practice-blueprint.png)
 
 
 
