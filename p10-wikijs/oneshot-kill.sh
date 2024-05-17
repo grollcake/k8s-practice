@@ -28,4 +28,4 @@ kubectl apply -f k8s/postgres.yaml
 kubectl apply -f k8s/wikijs.yaml
 kubectl apply -f k8s/ingress.yaml
 
-watch kubectl get all,pvc,ingress -o wide -n wikijs-app
+watch kubectl get all,pvc,ep,ingress -o wide -n wikijs-app
